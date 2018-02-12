@@ -40,8 +40,7 @@ private:
 						       map< string, vector< cv::Mat > > grads, float learning_rate );
 
 
-   Creates a list of random minibatches from (X, Y)
-    
+  // Creates a list of random minibatches from (X, Y)  
   // Arguments:
   // X -- input data, of shape (input size, number of examples)
   // Y -- true "label" vector (1 for blue dot / 0 for red dot), of shape (1, number of examples)
