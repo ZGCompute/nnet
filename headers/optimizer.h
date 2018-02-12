@@ -12,10 +12,6 @@
 using namespace std;
 
 
-
-// Deep fully-connected neural network, and Deep Convolutional netowrk implementation using OpenCV & OpenCL backend 
-// compile with: "g++ nnet.cpp -o nnet -I headers/ -std=c++11 `pkg-config opencv --cflags --libs`"
-
 class optimizer {
 
   
@@ -32,11 +28,11 @@ private:
   // Update parameters using one step of gradient descent
   // Arguments:
   // parameters -- dictionary containing your parameters to be updated:
-  //   parameters['W' + str(l)] = Wl
-  //   parameters['b' + str(l)] = bl
+  // parameters['W' + str(l)] = Wl
+  // parameters['b' + str(l)] = bl
   // grads -- dictionary containing your gradients to update each parameters:
-  //   grads['dW' + str(l)] = dWl
-  //   grads['db' + str(l)] = dbl
+  // grads['dW' + str(l)] = dWl
+  // grads['db' + str(l)] = dbl
   // learning_rate -- the learning rate, scalar.
   // Returns:
   // parameters -- dictionary containing your updated parameters 
