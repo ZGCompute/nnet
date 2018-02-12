@@ -23,8 +23,8 @@ public:
 
   
   // init Constructor and destructor
-  nnet();
- ~nnet();
+  initializer();
+ ~initializer();
 
 
 private:
