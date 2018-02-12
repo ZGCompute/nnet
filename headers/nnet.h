@@ -16,7 +16,7 @@ using namespace std;
 
 
 /*********************************************************************************************************/
-/* Deep fully-connected neural network, Deep Convolutional netowrk, and Deep Recurrent network           */ 
+/* Deep fully-connected neural network, Deep Convolutional network, and Deep Recurrent network           */ 
 /* implementation using OpenCV & OpenCL backend. Designed to support deep learning with NIFTI data.      */
 /* compile with: "g++ nnet.cpp -o nnet -I headers/ -std=c++11 `pkg-config opencv --cflags --libs`"       */
 /*********************************************************************************************************/
