@@ -11,6 +11,9 @@
 
 using namespace std;
 
+#ifndef _INITIALIZER
+#define _INITIALIZER
+#include "initializer.cpp"
 
 
 // Deep fully-connected neural network, and Deep Convolutional netowrk implementation using OpenCV & OpenCL backend 
@@ -92,3 +95,5 @@ private:
   
 
 };
+
+#endif
