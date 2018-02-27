@@ -11,6 +11,9 @@
 
 using namespace std;
 
+#ifndef _OPTIMIZER
+#define _OPTIMIZER
+#include "optimizer.cpp"
 
 class optimizer {
 
@@ -52,3 +55,5 @@ private:
   
 
 };
+
+#endif
