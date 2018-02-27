@@ -14,6 +14,9 @@
 
 using namespace std;
 
+#ifndef _NNET
+#define _NNET
+#include "nnet.cpp"
 
 /*********************************************************************************************************/
 /* Deep fully-connected neural network, Deep Convolutional network, and Deep Recurrent network           */ 
@@ -354,3 +357,4 @@ private:
   
 };
 
+#endif
