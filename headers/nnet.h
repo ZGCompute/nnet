@@ -14,11 +14,13 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 
+#include "initializer.hpp"
+#include "optimizer.hpp"
+
 using namespace std;
 
-#ifndef _NNET
-#define _NNET
-#include "nnet.cpp"
+#ifndef NNET_HPP
+#define NNET_HPP
 
 /*********************************************************************************************************/
 /* Deep fully-connected neural network, Deep Convolutional network, and Deep Recurrent network           */ 
@@ -28,14 +30,17 @@ using namespace std;
 
 class nnet {
 
-  
 public:
-
-  
+ 
   // Constructor and destructor
   nnet();
   virtual ~nnet();
-
+  
+  // The initializer object
+  initializer* init;
+  
+  // The optimizer object
+  optimizer* opt;
 
  /*********************************************************************************************************/
  /* General purpose containers for Activations and cached parameters                                      */
@@ -58,7 +63,6 @@ public:
     vector< map< string, map< string, cv::Mat > > > caches;
 
   };
-
   
   // Struct for cnn layers:
   // store the activations/gradients cache at a given layer in the model
@@ -68,8 +72,6 @@ public:
     vector< cv::Mat > AL;
     map< string, vector< cv::Mat > > caches;
   };
-
-
 
   // Struct for Rnn layers:
   // Store the activations/predictions
@@ -97,7 +99,6 @@ public:
 
   };
 
-
   // Container for LSTM model outputs.
   // Contains: 
   // a_next -- next hidden state, of shape (n_a, m)
@@ -114,16 +115,17 @@ public:
 
   };
   
-  
 private:
-
 
   /*********************************************************************************************************/
   /*                                                                                                       */
   /* General purpose I/O for image train/dev/test data                                                     */
   /*                                                                                                       */
   /*********************************************************************************************************/
-
+  
+  // Pointer to image data we read into memory from NIFTI
+  vector< cv::Mat >* imgData;
+  
   // Loads 3d volumetric data into memory from NIFTI (*.nii) binary file format
   // Agruments:
   // fname -- the string of the .nii file name to load into memory
@@ -195,14 +197,12 @@ private:
   // dW -- Gradient of the cost with respect to W (current layer l), same shape as W
   // db -- Gradient of the cost with respect to b (current layer l), same shape as b
   map< string, cv::Mat > linear_backward( cv::Mat dZ, map< string, cv::Mat> cache );
-
-                                                                                                           
+                                                                                                        
   /*********************************************************************************************************/
   /*                                                                                                       */
   /* CNN primatives for 2D and 3D models:                                                                  */
   /*                                                                                                       */
   /*********************************************************************************************************/
-
   
   // Pad an input image with zeros in x and y dimensions
   // Arguments:
@@ -212,15 +212,13 @@ private:
   // padded_image -- a cv::Mat representing the input image padded by pad_size
   vector< cv::Mat > zero_pad( vector< cv::Mat > X, int pad_size );
 
-
   // Unroll an N-dimensional image stored in a vector of cv::Mats
   // Arguments:
   // img -- a vector of Nd cv::Mats
   // Returns:
   // unrolled img -- a vector containing 1 1d cv::Mat with the unrolled data
   vector< cv::Mat > img_unroll( vector< cv::Mat > img );
-
-  
+ 
   // FIXME: check to make sure elemts of s are summed along the correct axis
   // Apply one filter defined by parameters W on a single slice (a_slice_prev) of the output activation 
   // of the previous layer.
@@ -232,8 +230,7 @@ private:
   // Z -- a scalar value, result of convolving the sliding window (W, b) on a slice x of the input data
   // Element wise product of a_slice * W. then add bias
   cv::Scalar conv_single_step( cv::Mat a_slice_prev, cv::Mat W, cv::Mat b );
-
-  
+ 
   // Implements the forward propagation for a convolution function    
   // Arguments:
   // A_prev -- output activations of the previous layer, array of shape (m, n_H_prev, n_W_prev, n_C_prev)
@@ -244,7 +241,6 @@ private:
   // Z -- conv output, array of shape (m, n_H, n_W, n_C)
   // cache -- cache of values needed for the conv_backward() function
   cacheActivationsL3D conv_forward( vector<cv::Mat> A_prev, vector<cv::Mat> W, vector<cv::Mat> b, map< string, int > hparameters );
-
 
   // Implements the forward pass of the pooling layer
   // Arguments:
@@ -281,8 +277,7 @@ private:
   // Returns:
   // mask -- Array of the same shape as window, contains a True at the position corresponding to the max entry of x.
   cv::Mat create_mask_from_window( cv::Mat x );
-
-  
+ 
   // Distributes the input value in the matrix of dimension shape
   // Arguments:
   // dz -- input scalar
@@ -290,15 +285,12 @@ private:
   // Returns:
   // a -- Array of size (n_H, n_W) for which we distributed the value of dz
   cv::Mat distribute_value( cv::Scalar dZ, int n_H, int n_W );
-
-  
                                                                                                          
   /*********************************************************************************************************/
   /*                                                                                                       */
   /* RNN primatives for sequence models                                                                    */
   /*                                                                                                       */
   /*********************************************************************************************************/
-
 
   // Implements a single forward step of the vanilla RNN-cell 
   // Arguments:
@@ -315,8 +307,7 @@ private:
   // yt_pred -- prediction at timestep "t", array of shape (n_y, m)
   // cache -- tuple of values needed for the backward pass, contains (a_next, a_prev, xt, parameters)
   cacheActivationsRNN rnn_cell_forward( vector< cv::Mat>  xt, vector< cv::Mat > a_prev, map< string, vector< cv::Mat > > );  
-
-
+  
   // Implement the forward propagation of the recurrent neural network 
   // Arguments:
   // x -- Input data for every time-step, of shape (n_x, m, T_x).
@@ -333,7 +324,6 @@ private:
   // caches -- tuple of values needed for the backward pass, contains (list of caches, x)
   cacheActivationsLRNN rnn_forward( vector< cv::Mat > x, vector< cv::Mat > a0, map< string, vector< cv::Mat > > parameters );
 
-  
   // Implement a single forward step of the LSTM-cell 
   // Arguments:
   // xt -- your input data at timestep "t", array of shape (n_x, m).
