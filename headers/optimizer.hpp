@@ -5,15 +5,15 @@
 #include <map>
 #include <list>
 #include <math.h>
+
 #include <opencv/cv.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
 
 using namespace std;
 
-#ifndef _OPTIMIZER
-#define _OPTIMIZER
-#include "optimizer.cpp"
+#ifndef OPTIMIZER_HPP_
+#define OPTIMIZER_HPP_
 
 class optimizer {
 
@@ -23,7 +23,7 @@ public:
   
   // init Constructor and destructor
   optimizer();
- ~optimizer();
+  virtual ~optimizer();
 
 
 private:
@@ -39,7 +39,7 @@ private:
   // learning_rate -- the learning rate, scalar.
   // Returns:
   // parameters -- dictionary containing your updated parameters 
-  map< string, vector< cv::Mat > > optimizer::update_parameters_gd( map< string, vector< cv::Mat > > parameteters, \
+  map< string, vector< cv::Mat > > update_parameters_gd( map< string, vector< cv::Mat > > parameteters, \
 						       map< string, vector< cv::Mat > > grads, float learning_rate );
 
 
@@ -50,7 +50,7 @@ private:
   // mini_batch_size -- size of the mini-batches, integer
   // Returns:
   // mini_batches -- list of synchronous (mini_batch_X, mini_batch_Y)
-  map< string, vector< cv::Mat > > optimizer::rand_mini_batches( vector< cv::Mat > X, vector< cv::Mat > Y, \
+  map< string, vector< cv::Mat > > rand_mini_batches( vector< cv::Mat > X, vector< cv::Mat > Y, \
 						         	    int mini_batch_size = 64, int seed = 0 );
   
 
