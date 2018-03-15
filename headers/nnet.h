@@ -2,11 +2,13 @@
 #include <iostream>
 #include <fstream>
 #include <strstream>
+
 #include <vector>
 #include <string>
 #include <map>
 #include <list>
 #include <math.h>
+
 #include <opencv/cv.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
@@ -30,9 +32,9 @@ class nnet {
 public:
 
   
-  // init Constructor and destructor
+  // Constructor and destructor
   nnet();
- ~nnet();
+  virtual ~nnet();
 
 
  /*********************************************************************************************************/
@@ -133,11 +135,11 @@ private:
   /*                                                                                                       */
   /*********************************************************************************************************/
   
-  // Implement the forward propagation for the LINEAR->ACTIVATION layer
+  // Implements the forward propagation for the LINEAR->ACTIVATION layer
   // Arguments:
   // A_prev -- activations from previous layer (or input data): (size of previous layer, number of examples)
-  // W -- weights matrix: numpy array of shape (size of current layer, size of previous layer)
-  // b -- bias vector, numpy array of shape (size of the current layer, 1)
+  // W -- weights matrix: array of shape (size of current layer, size of previous layer)
+  // b -- bias vector, array of shape (size of the current layer, 1)
   // l -- current layer index for storing caches
   // activation -- the activation to be used in this layer, stored as a text string: "sigmoid" or "relu"
   // Returns:
@@ -164,9 +166,9 @@ private:
   // at a collection of nodes in a given layer
   vector< cv::Mat > softmax( vector< cv::Mat > Z );
   
-  // Implement forward propagation for the [LINEAR->RELU]*(L-1)->LINEAR->SIGMOID computation
+  // Forward propagation for the [LINEAR->RELU]*(L-1)->LINEAR->SIGMOID computation
   // Arguments:
-  // X -- data, numpy array of shape (input size, number of examples)
+  // X -- data, array of shape (input size, number of examples)
   // parameters -- output of initialize_parameters_deep()
   // Returns:
   // AL -- last post-activation value
@@ -175,7 +177,7 @@ private:
   // the cache of linear_sigmoid_forward() (there is one, indexed L-1)
   ActivationsL L_model_forward( cv::Mat X, map< string, cv::Mat > parameters );
 
-  // Implement the cross-entropy cost function for sigmoid output
+  // The cross-entropy cost function for sigmoid output
   // Arguments:
   // AL -- probability vector corresponding to your label predictions, shape (1, number of examples)
   // Y -- true "label" vector (for example: containing 0 if non-id, 1 if id), shape (1, number of examples)
@@ -183,8 +185,8 @@ private:
   // cost -- cross-entropy cost
   double compute_cost( cv::Mat AL, cv::Mat Y );
   
-  // fully connected nnet prototypes:
-  // Implement the linear portion of backward propagation for a single layer (layer l)
+  // Fully connected nnet prototypes:
+  // The linear portion of backward propagation for a single layer (layer l)
   // Arguments:
   // dZ -- Gradient of the cost with respect to the linear output (of current layer l)
   // cache -- tuple of values (A_prev, W, b) coming from the forward propagation in the current layer
@@ -234,12 +236,12 @@ private:
   
   // Implements the forward propagation for a convolution function    
   // Arguments:
-  // A_prev -- output activations of the previous layer, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+  // A_prev -- output activations of the previous layer, array of shape (m, n_H_prev, n_W_prev, n_C_prev)
   // W -- Weights, numpy array of shape (f, f, n_C_prev, n_C)
   // b -- Biases, numpy array of shape (1, 1, 1, n_C)
-  // hparameters -- python dictionary containing "stride" and "pad"
+  // hparameters -- dictionary containing "stride" and "pad"
   // Returns:
-  // Z -- conv output, numpy array of shape (m, n_H, n_W, n_C)
+  // Z -- conv output, array of shape (m, n_H, n_W, n_C)
   // cache -- cache of values needed for the conv_backward() function
   cacheActivationsL3D conv_forward( vector<cv::Mat> A_prev, vector<cv::Mat> W, vector<cv::Mat> b, map< string, int > hparameters );
 
@@ -265,7 +267,7 @@ private:
 
   // Implement the backward propagation for a convolution function
   // Arguments:
-  // dZ -- gradient of the cost with respect to the output of the conv layer (Z), numpy array of shape (m, n_H, n_W, n_C)
+  // dZ -- gradient of the cost with respect to the output of the conv layer (Z), array of shape (m, n_H, n_W, n_C)
   // cache -- cache of values needed for the conv_backward(), output of conv_forward()
   // Returns:
   // dA_prev -- gradient of the cost with respect to the input of the conv layer (A_prev), array of shape (m, n_H_prev, n_W_prev, n_C_prev)
@@ -302,7 +304,7 @@ private:
   // Arguments:
   // xt -- your input data at timestep "t", array of shape (n_x, m).
   // a_prev -- Hidden state at timestep "t-1", array of shape (n_a, m)
-  // parameters -- python dictionary containing:
+  // parameters -- dictionary containing:
   // Wax -- Weight matrix multiplying the input, array of shape (n_a, n_x)
   // Waa -- Weight matrix multiplying the hidden state, array of shape (n_a, n_a)
   // Wya -- Weight matrix relating the hidden-state to the output, array of shape (n_y, n_a)
