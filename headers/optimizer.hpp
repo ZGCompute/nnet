@@ -21,6 +21,9 @@
 //          Support for initializing weight vectors with zeros, random values,
 //          and He. Initialization is included.
 
+// Inspired by https://www.coursera.org/learn/convolutional-neural-networks 
+// & https://arxiv.org/pdf/1502.01852.pdf
+
 #include <stdio.h>
 #include <iostream>
 #include <vector>
