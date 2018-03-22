@@ -19,6 +19,8 @@
 //          network architecture. Several common activation functions such as
 //          Sigmoid(), Relu(), tanH(), and Softmax() are supported.
 
+// Inspired by https://www.coursera.org/learn/convolutional-neural-networks 
+
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
