@@ -63,7 +63,7 @@ private:
   // WL -- weight matrix of shape (layers_dims[L], layers_dims[L-1])
   // bL -- bias vector of shape (layers_dims[L], 1)
   // FIXME: add example of conv2d wight shapes
-  map< string, vector< cv::Mat > > parameters \
+  map< string, vector< cv::Mat > > parameters 
   init_params_he( vector< vector< int > > layer_dims, vector< string > layer_types ); 
 
   // Arguments:
@@ -78,7 +78,7 @@ private:
   // WL -- weight matrix of shape (layers_dims[L], layers_dims[L-1])
   // bL -- bias vector of shape (layers_dims[L], 1)
   // FIXME: add example of conv2d wight shapes
-  map< string, vector< cv::Mat > > parameters \
+  map< string, vector< cv::Mat > > parameters 
   init_params_rand( vector< vector< int > > layer_dims, vector< string > layer_types );
 
   // Arguments:
@@ -93,7 +93,7 @@ private:
   // WL -- weight matrix of shape (layers_dims[L], layers_dims[L-1])
   // bL -- bias vector of shape (layers_dims[L], 1)
   // FIXME: add example of conv2d wight shapes
-  map< string, vector< cv::Mat > > parameters \
+  map< string, vector< cv::Mat > > parameters 
   init_params_zeros( vector< vector< int > > layer_dims, vector< string > layer_types );
   
   // Implements a n-layer neural network: LINEAR->RELU->LINEAR->RELU->....LINEAR->SIGMOID.
