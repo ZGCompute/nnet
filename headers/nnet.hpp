@@ -94,6 +94,7 @@ public:
 
     vector< cv::Mat > AL;
     map< string, vector< cv::Mat > > caches;
+   
   };
 
   // Struct for Rnn layers:
