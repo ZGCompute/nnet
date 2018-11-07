@@ -55,7 +55,6 @@ class nnet {
 
 public:
  
-  // Constructor and destructor
   nnet();
   virtual ~nnet();
   
